@@ -91,6 +91,12 @@ public class QuizGameController implements Initializable {
     private String jelszo = "Plutonium-36";
     private Alert uzenet;
 
+    @FXML
+    private Label lblEredmenyek;
+
+    @FXML
+    private Label lblGameOver;
+
     private List<Kerdes> kerdesek = new ArrayList<Kerdes>();
 
 
@@ -114,15 +120,24 @@ public class QuizGameController implements Initializable {
     void KovetkezoKerdes(ActionEvent event) {
 
         kerdesekSzama++;
-        KerdesBetoltes();
+
+        if(kerdesekSzama <= kerdesek.size()-1){
+            KerdesBetoltes();
+        }
+        else if(kerdesekSzama == kerdesek.size()){
+
+            lblGameOver.setText("Játék vége!");
+            lblEredmenyek.setText("Összesen "+String.valueOf(kerdesek.size())+" kérdésből "+String.valueOf(joValaszokSzama)+" kérdésre adott helyes választ!");
+        }
+
 
     }
 
     @FXML
     void EredmenyKiiras(ActionEvent event) {
 
-        helper.Kiertekeles(chBoxA, chBoxB, chBoxC, chBoxD, lblAValasz, lblBValasz, lblCValasz, lblDValasz, kerdesek.get(kerdesekSzama), joValaszokSzama);
-        if(kerdesekSzama < kerdesek.size()){
+        joValaszokSzama += helper.Kiertekeles(chBoxA, chBoxB, chBoxC, chBoxD, lblAValasz, lblBValasz, lblCValasz, lblDValasz, kerdesek.get(kerdesekSzama));
+        if(kerdesekSzama <= kerdesek.size()){
             btnKovetkezo.setDisable(false);
         }
 
@@ -170,19 +185,16 @@ public class QuizGameController implements Initializable {
 
     public void KerdesBetoltes() {
 
-        if(kerdesekSzama < kerdesek.size()){
+        CheckBoxAlapHelyzet();
 
-            CheckBoxAlapHelyzet();
+        ValaszLabelAlapHelyzet();
 
-            ValaszLabelAlapHelyzet();
-
-            btnKovetkezo.setDisable(true);
-            lblKerdes.setText(kerdesek.get(kerdesekSzama).getKerdes());
-            lblAValasz.setText(kerdesek.get(kerdesekSzama).getValasz_A());
-            lblBValasz.setText(kerdesek.get(kerdesekSzama).getValasz_B());
-            lblCValasz.setText(kerdesek.get(kerdesekSzama).getValasz_C());
-            lblDValasz.setText(kerdesek.get(kerdesekSzama).getValasz_D());
-        }
+        btnKovetkezo.setDisable(true);
+        lblKerdes.setText(kerdesek.get(kerdesekSzama).getKerdes());
+        lblAValasz.setText(kerdesek.get(kerdesekSzama).getValasz_A());
+        lblBValasz.setText(kerdesek.get(kerdesekSzama).getValasz_B());
+        lblCValasz.setText(kerdesek.get(kerdesekSzama).getValasz_C());
+        lblDValasz.setText(kerdesek.get(kerdesekSzama).getValasz_D());
 
     }
 
@@ -193,6 +205,11 @@ public class QuizGameController implements Initializable {
         chBoxC.setSelected(false);
         chBoxD.setSelected(false);
 
+        chBoxA.setDisable(false);
+        chBoxB.setDisable(false);
+        chBoxC.setDisable(false);
+        chBoxD.setDisable(false);
+
     }
 
     public void ValaszLabelAlapHelyzet(){
@@ -201,6 +218,41 @@ public class QuizGameController implements Initializable {
         lblBValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
         lblCValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
         lblDValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
+
+    }
+    @FXML
+    void AValaszJelolve(ActionEvent event) {
+
+        chBoxB.setDisable(true);
+        chBoxC.setDisable(true);
+        chBoxD.setDisable(true);
+
+    }
+
+    @FXML
+    void BValaszJelolve(ActionEvent event) {
+
+        chBoxA.setDisable(true);
+        chBoxC.setDisable(true);
+        chBoxD.setDisable(true);
+
+    }
+
+    @FXML
+    void CValaszJelolve(ActionEvent event) {
+
+        chBoxA.setDisable(true);
+        chBoxB.setDisable(true);
+        chBoxD.setDisable(true);
+
+    }
+
+    @FXML
+    void DValaszJelolve(ActionEvent event) {
+
+        chBoxA.setDisable(true);
+        chBoxC.setDisable(true);
+        chBoxB.setDisable(true);
 
     }
 }

@@ -50,7 +50,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <Label fx:id="lblCimSor" layoutX="280.0" layoutY="30.0" text="Legyen Ön is valami!" textAlignment="CENTER">
+      <Label fx:id="lblCimSor" layoutX="280.0" layoutY="30.0" text="Legyen Ön is Párttitkár!" textAlignment="CENTER">
          <textFill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
