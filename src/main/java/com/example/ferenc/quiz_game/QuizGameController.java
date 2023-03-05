@@ -7,6 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -76,9 +79,11 @@ public class QuizGameController implements Initializable {
 
     private int kerdesekSzama = 0;
 
-    private int joValaszokSzama;
+    private int joValaszokSzama = 0;
 
     private ABKezelo kezelo;
+
+    private QuizGameHelper helper = new QuizGameHelper();
 
     private String connectionURL = "jdbc:mysql://localhost:3306/quizapp_db?useSSL=false";
 
@@ -115,6 +120,12 @@ public class QuizGameController implements Initializable {
 
     @FXML
     void EredmenyKiiras(ActionEvent event) {
+
+        helper.Kiertekeles(chBoxA, chBoxB, chBoxC, chBoxD, lblAValasz, lblBValasz, lblCValasz, lblDValasz, kerdesek.get(kerdesekSzama), joValaszokSzama);
+        if(kerdesekSzama < kerdesek.size()){
+            btnKovetkezo.setDisable(false);
+        }
+
 
     }
 
@@ -159,12 +170,37 @@ public class QuizGameController implements Initializable {
 
     public void KerdesBetoltes() {
 
+        if(kerdesekSzama < kerdesek.size()){
 
-        lblKerdes.setText(kerdesek.get(kerdesekSzama).getKerdes());
-        lblAValasz.setText(kerdesek.get(kerdesekSzama).getValasz_A());
-        lblBValasz.setText(kerdesek.get(kerdesekSzama).getValasz_B());
-        lblCValasz.setText(kerdesek.get(kerdesekSzama).getValasz_C());
-        lblDValasz.setText(kerdesek.get(kerdesekSzama).getValasz_D());
+            CheckBoxAlapHelyzet();
+
+            ValaszLabelAlapHelyzet();
+
+            btnKovetkezo.setDisable(true);
+            lblKerdes.setText(kerdesek.get(kerdesekSzama).getKerdes());
+            lblAValasz.setText(kerdesek.get(kerdesekSzama).getValasz_A());
+            lblBValasz.setText(kerdesek.get(kerdesekSzama).getValasz_B());
+            lblCValasz.setText(kerdesek.get(kerdesekSzama).getValasz_C());
+            lblDValasz.setText(kerdesek.get(kerdesekSzama).getValasz_D());
+        }
+
+    }
+
+    public void CheckBoxAlapHelyzet(){
+
+        chBoxA.setSelected(false);
+        chBoxB.setSelected(false);
+        chBoxC.setSelected(false);
+        chBoxD.setSelected(false);
+
+    }
+
+    public void ValaszLabelAlapHelyzet(){
+
+        lblAValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
+        lblBValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
+        lblCValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
+        lblDValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
 
     }
 }
