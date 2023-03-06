@@ -61,14 +61,11 @@ public class Kerdes {
 
     @Override
     public String toString() {
-        return "Kerdes{" +
-                "id=" + id +
-                ", Kérdés: " + kerdes + '\'' +
-                ", A válasz: " + valasz_A + '\'' +
-                ", B válasz: " + valasz_B + '\'' +
-                ", C válasz: " + valasz_C + '\'' +
-                ", D válasz:" + valasz_D + '\'' +
-                ", helyes válasz: " + helyesValasz + '\'' +
-                '}';
+        return "Kérdés: " + this.kerdes  +
+                "\nA válasz: " + this.valasz_A  +
+                ", B válasz: " + this.valasz_B +
+                ", C válasz: " + this.valasz_C  +
+                ", D válasz:" + this.valasz_D  +
+                ", helyes válasz: " + this.helyesValasz;
     }
 }

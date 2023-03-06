@@ -3,14 +3,20 @@ package com.example.ferenc.quiz_game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,14 +41,9 @@ public class QuizGameController implements Initializable {
     @FXML
     private Menu mnAdatkezeles;
 
-    @FXML
-    private MenuItem mnIAdatTorles;
 
     @FXML
-    private MenuItem mnIAdatfelvitel;
-
-    @FXML
-    private MenuItem mnIModositas;
+    private MenuItem mnIAdatKezelo;
 
     @FXML
     private Label lblKerdes;
@@ -100,21 +101,7 @@ public class QuizGameController implements Initializable {
     private List<Kerdes> kerdesek = new ArrayList<Kerdes>();
 
 
-    @FXML
-    void AdatFelvitel(ActionEvent event) {
 
-    }
-
-
-    @FXML
-    void AdatModositas(ActionEvent event) {
-
-    }
-
-    @FXML
-    void AdatTorles(ActionEvent event) {
-
-    }
 
     @FXML
     void KovetkezoKerdes(ActionEvent event) {
@@ -253,6 +240,13 @@ public class QuizGameController implements Initializable {
         chBoxA.setDisable(true);
         chBoxC.setDisable(true);
         chBoxB.setDisable(true);
+
+    }
+
+    @FXML
+    void AdatKezeles(ActionEvent event) {
+
+        helper.NewWindowOpening(kerdesek);
 
     }
 }

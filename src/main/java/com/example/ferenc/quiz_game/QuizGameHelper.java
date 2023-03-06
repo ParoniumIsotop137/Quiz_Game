@@ -1,12 +1,22 @@
 package com.example.ferenc.quiz_game;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuizGameHelper {
+
+    private Alert uzenet;
     public int Kiertekeles(CheckBox chBoxA, CheckBox chBoxB, CheckBox chBoxC, CheckBox chBoxD, Label lblAValasz, Label lblBValasz, Label lblCValasz, Label lblDValasz, Kerdes kerdes) {
 
         int joValaszokSzama = 0;
@@ -61,6 +71,32 @@ public class QuizGameHelper {
         }
 
         return joValaszokSzama;
+
+    }
+
+
+    public void NewWindowOpening(List<Kerdes> kerdesek) {
+
+        uzenet = new Alert(Alert.AlertType.ERROR);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DataHandling-Window.fxml"));
+            Parent root = loader.load();
+
+            NewWindowController newController = loader.getController();
+            newController.ListaFeltoltes(kerdesek);
+            Stage thisStage = new Stage();
+
+            Scene scene = new Scene(root);
+            thisStage.setScene(scene);
+            thisStage.setTitle("Adatkezelés");
+            thisStage.show();
+
+        } catch (Exception e) {
+            uzenet.setTitle("Hiba");
+            uzenet.setContentText("Hiba az új ablak megnyitásakor: "+e.getMessage());
+            uzenet.show();
+        }
+
 
     }
 }

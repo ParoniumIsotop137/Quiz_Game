@@ -1,4 +1,4 @@
-#mnIAdatfelvitel{
+#mnIAdatKezelo{
 
     -fx-background-color: #B0E0E6;
     -fx-text-fill: #228B22;
@@ -8,24 +8,3 @@
     -fx-font-weight: bold;
 }
 
-#mnIModositas{
-
-    -fx-background-color: #B0E0E6;
-    -fx-text-fill: #228B22;
-    -fx-font-family: "Segoe Script";
-    -fx-font-size: 14px;
-    -fx-font-style: italic;
-    -fx-font-weight: bold;
-
-}
-
-#mnIAdatTorles{
-
-    -fx-background-color: #B0E0E6;
-    -fx-text-fill: #228B22;
-    -fx-font-family: "Segoe Script";
-    -fx-font-size: 14px;
-    -fx-font-style: italic;
-    -fx-font-weight: bold;
-
-}
