@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ public class QuizGameHelper {
             Scene scene = new Scene(root);
             thisStage.setScene(scene);
             thisStage.setTitle("Adatkezelés");
+            thisStage.initModality(Modality.APPLICATION_MODAL);
             thisStage.show();
 
         } catch (Exception e) {
