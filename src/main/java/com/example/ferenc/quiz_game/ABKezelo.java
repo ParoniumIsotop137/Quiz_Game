@@ -81,4 +81,42 @@ public class ABKezelo {
         }
 
     }
+
+    public void AdatModositas(Kerdes kerdes) throws SQLException {
+
+        try {
+            stm = conn.prepareStatement("Update kerdes set kerdes=?, valasz_a=?, valasz_b=?, valasz_c=?, valasz_d=?, helyes_valasz=? where id=?");
+            stm.setString(1, kerdes.getKerdes());
+            stm.setString(2, kerdes.getValasz_A());
+            stm.setString(3, kerdes.getValasz_B());
+            stm.setString(4, kerdes.getValasz_C());
+            stm.setString(5, kerdes.getValasz_D());
+            stm.setString(6, kerdes.getHelyesValasz());
+            stm.setInt(7, kerdes.getId());
+
+            stm.executeUpdate();
+
+            stm.clearParameters();
+
+
+        } catch (Exception e) {
+            throw new SQLException("Az adatok módosítása sikertelen volt! "+e.getMessage());
+        }
+
+    }
+
+    public void AdatTorles(Kerdes kerdes) throws SQLException {
+
+        try {
+            stm = conn.prepareStatement("Delete from kerdes where id=?");
+            stm.setInt(1, kerdes.getId());
+
+            stm.clearParameters();
+
+        } catch (SQLException e) {
+            throw new SQLException("Az adatok törlése sikertelen volt! "+e.getMessage());
+        }
+
+    }
+
 }
