@@ -103,6 +103,7 @@ public class NewWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         uzenet = new Alert(Alert.AlertType.ERROR);
+        btnMentes.setDisable(true);
         try {
 
             kezelo = new ABKezelo(connectionURL, felhasznalo, jelszo);
@@ -128,7 +129,7 @@ public class NewWindowController implements Initializable {
         try {
 
             if(kerdes == null){
-                if(txtKerdes.getText() != null && !txtKerdes.getText().isEmpty()){
+                if(txtKerdes.getText() != null && !txtKerdes.getText().isEmpty() && selectedIndex != -1){
 
                     kerdes = new Kerdes(txtKerdes.getText(), txtA_valasz.getText(), txtB_valasz.getText(), txtC_valasz.getText(), txtD_valasz.getText(), helyesValaszok[selectedIndex]);
                     kezelo.AdatFelvitel(kerdes);
@@ -146,7 +147,10 @@ public class NewWindowController implements Initializable {
 
 
         } catch(IllegalArgumentException e){
-
+            uzenet = new Alert(Alert.AlertType.WARNING);
+            uzenet.setTitle("Figyelmeztetés");
+            uzenet.setContentText(e.getMessage());
+            uzenet.show();
         } catch (SQLException e){
             hibaUzenet.setTitle("Hiba");
             hibaUzenet.setContentText("Adatbázis hiba: "+e.getMessage());
@@ -154,7 +158,7 @@ public class NewWindowController implements Initializable {
         }
         uzenet = new Alert(Alert.AlertType.INFORMATION);
         uzenet.setTitle("Információ");
-        uzenet.setContentText("Az új kérdás/válaszok felvitele sikeresen megtörtént!");
+        uzenet.setContentText("Az új kérdés/válaszok felvitele sikeresen megtörtént!");
         uzenet.show();
 
 
@@ -165,10 +169,16 @@ public class NewWindowController implements Initializable {
     @FXML
     void Modositas(ActionEvent event) {
 
+        Ellenorzes();
+        btnMentes.setDisable(false);
+
     }
 
     @FXML
     void Torles(ActionEvent event) {
+
+        Ellenorzes();
+
 
     }
 
@@ -182,6 +192,102 @@ public class NewWindowController implements Initializable {
             uzenet.setContentText("Adatbázis hiba: " + e.getMessage());
             uzenet.show();
         }
+
+    }
+
+    public void Ellenorzes(){
+
+        uzenet = new Alert(Alert.AlertType.WARNING);
+        int cmbIndex;
+
+        if(lstVKerdesLista.getSelectionModel().getSelectedIndex() != -1){
+            selectedIndex = lstVKerdesLista.getSelectionModel().getSelectedIndex();
+
+            kerdes = aBKerdesek.get(selectedIndex);
+            txtKerdes.setText(kerdes.getKerdes());
+            txtA_valasz.setText(kerdes.getValasz_A());
+            txtB_valasz.setText(kerdes.getValasz_B());
+            txtC_valasz.setText(kerdes.getValasz_C());
+            txtD_valasz.setText(kerdes.getValasz_D());
+
+            if(kerdes.getHelyesValasz().equals(helyesValaszok[0])){
+                cmbHelyesValasz.getSelectionModel().select(0);
+            }
+            else if(kerdes.getHelyesValasz().equals(helyesValaszok[1])){
+                cmbHelyesValasz.getSelectionModel().select(1);
+            }
+            else if(kerdes.getHelyesValasz().equals(helyesValaszok[2])){
+                cmbHelyesValasz.getSelectionModel().select(2);
+            }
+            else if(kerdes.getHelyesValasz().equals(helyesValaszok[3])){
+                cmbHelyesValasz.getSelectionModel().select(3);
+            }
+
+        }
+        else{
+            uzenet.setTitle("Figyelmeztetés");
+            uzenet.setContentText("Nincsen módosításra kijelölt sor!");
+            uzenet.show();
+        }
+    }
+
+    @FXML
+    void Mentes(ActionEvent event) {
+
+        uzenet = new Alert(Alert.AlertType.WARNING);
+        btnMentes.setDisable(true);
+        int cmbIndex = cmbHelyesValasz.getSelectionModel().getSelectedIndex();
+        Alert hibaUzenet = new Alert(Alert.AlertType.ERROR);
+        try {
+
+            if(txtKerdes.getText() != null && !txtKerdes.getText().isEmpty() && selectedIndex != -1){
+
+                kerdes.setKerdes(txtKerdes.getText());
+                kerdes.setValasz_A(txtA_valasz.getText());
+                kerdes.setValasz_B(txtB_valasz.getText());
+                kerdes.setValasz_C(txtC_valasz.getText());
+                kerdes.setValasz_D(txtD_valasz.getText());
+                kerdes.setHelyesValasz(helyesValaszok[cmbIndex]);
+
+                kezelo.AdatModositas(kerdes);
+                aBKerdesek.set(selectedIndex, kerdes);
+                items.set(selectedIndex, kerdes.toString());
+                lstVKerdesLista.setItems(items);
+
+
+            }
+            else{
+                uzenet = new Alert(Alert.AlertType.WARNING);
+                uzenet.setTitle("Figyelmeztetés");
+                uzenet.setContentText("A kérdés mező nem maradhat üresen");
+                uzenet.show();
+            }
+
+        } catch (IllegalArgumentException e){
+            uzenet = new Alert(Alert.AlertType.WARNING);
+            uzenet.setTitle("Figyelmeztetés");
+            uzenet.setContentText(e.getMessage());
+            uzenet.show();
+        } catch (SQLException e){
+            hibaUzenet.setTitle("Hiba");
+            hibaUzenet.setContentText("Adatbázis hiba: "+e.getMessage());
+            hibaUzenet.show();
+        }
+        uzenet = new Alert(Alert.AlertType.INFORMATION);
+        uzenet.setTitle("Információ");
+        uzenet.setContentText("Az új kérdés/válaszok módosítása sikeresen megtörtént!");
+        uzenet.show();
+        MezokAlaphelyzetbeAllitasa();
+
+    }
+    public void MezokAlaphelyzetbeAllitasa(){
+
+        txtKerdes.setText("");
+        txtA_valasz.setText("");
+        txtB_valasz.setText("");
+        txtC_valasz.setText("");
+        txtD_valasz.setText("");
+        cmbHelyesValasz.getSelectionModel().select(0);
 
     }
 }
