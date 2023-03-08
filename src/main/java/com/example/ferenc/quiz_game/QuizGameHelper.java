@@ -76,7 +76,7 @@ public class QuizGameHelper {
     }
 
 
-    public void NewWindowOpening(List<Kerdes> kerdesek) {
+    public void NewWindowOpening() {
 
         uzenet = new Alert(Alert.AlertType.ERROR);
         try {
@@ -84,7 +84,6 @@ public class QuizGameHelper {
             Parent root = loader.load();
 
             NewWindowController newController = loader.getController();
-            newController.ListaFeltoltes(kerdesek);
             Stage thisStage = new Stage();
 
             Scene scene = new Scene(root);

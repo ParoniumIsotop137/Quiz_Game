@@ -108,11 +108,10 @@ public class QuizGameController implements Initializable {
 
         kerdesekSzama++;
 
-        if(kerdesekSzama <= kerdesek.size()-1){
+        if(kerdesekSzama < kerdesek.size()-1){
             KerdesBetoltes();
         }
-        else if(kerdesekSzama == kerdesek.size()){
-
+        else {
             lblGameOver.setText("Játék vége!");
             lblEredmenyek.setText("Összesen "+String.valueOf(kerdesek.size())+" kérdésből "+String.valueOf(joValaszokSzama)+" kérdésre adott helyes választ!");
         }
@@ -247,15 +246,7 @@ public class QuizGameController implements Initializable {
     @FXML
     void AdatKezeles(ActionEvent event) {
 
-        uzenet = new Alert(Alert.AlertType.ERROR);
+        helper.NewWindowOpening();
 
-        helper.NewWindowOpening(kerdesek);
-        try {
-            kezelo.KapcsolatBontasa();
-        } catch (SQLException e) {
-            uzenet.setTitle("Hiba");
-            uzenet.setContentText("Adatbázis hiba: " + e.getMessage());
-            uzenet.show();
-        }
     }
 }

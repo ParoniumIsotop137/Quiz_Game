@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -67,6 +68,12 @@ public class NewWindowController implements Initializable {
     private String felhasznalo = "root";
     private String jelszo = "Plutonium-36";
 
+    private String [] helyesValaszok = new String[]{"valasz_a","valasz_b", "valasz_c", "valasz_d"};
+
+    private List<Kerdes> aBKerdesek = new ArrayList<Kerdes>();
+
+    private ObservableList<String> items;
+
     public int getSelectedIndex() {
         return selectedIndex;
     }
@@ -77,12 +84,12 @@ public class NewWindowController implements Initializable {
 
 
 
-    public void ListaFeltoltes(List<Kerdes> kerdesek){
+    public void ABListaFeltoltes(){
 
 
-        ObservableList<String> items = FXCollections.observableArrayList();
+        items = FXCollections.observableArrayList();
 
-        for (Kerdes kerdes : kerdesek) {
+        for (Kerdes kerdes : aBKerdesek) {
             items.add(kerdes.toString());
         }
 
@@ -99,7 +106,8 @@ public class NewWindowController implements Initializable {
         try {
 
             kezelo = new ABKezelo(connectionURL, felhasznalo, jelszo);
-
+            ListaFeltoltes();
+            ABListaFeltoltes();
         } catch (SQLException e) {
             uzenet.setTitle("Hiba");
             uzenet.setContentText("Adatbázis hiba: "+e.getMessage());
@@ -111,6 +119,44 @@ public class NewWindowController implements Initializable {
     }
     @FXML
     void Felvitel(ActionEvent event) {
+
+        uzenet = new Alert(Alert.AlertType.WARNING);
+        Alert hibaUzenet = new Alert(Alert.AlertType.ERROR);
+
+        selectedIndex = cmbHelyesValasz.getSelectionModel().getSelectedIndex();
+
+        try {
+
+            if(kerdes == null){
+                if(txtKerdes.getText() != null && !txtKerdes.getText().isEmpty()){
+
+                    kerdes = new Kerdes(txtKerdes.getText(), txtA_valasz.getText(), txtB_valasz.getText(), txtC_valasz.getText(), txtD_valasz.getText(), helyesValaszok[selectedIndex]);
+                    kezelo.AdatFelvitel(kerdes);
+                    aBKerdesek.add(kerdes);
+                    items.add(kerdes.toString());
+                    lstVKerdesLista.setItems(items);
+
+                }
+                else{
+                    uzenet.setTitle("Figyelmeztetés");
+                    uzenet.setContentText("A kérdés mező nem maradhat üresen!");
+                    uzenet.show();
+                }
+            }
+
+
+        } catch(IllegalArgumentException e){
+
+        } catch (SQLException e){
+            hibaUzenet.setTitle("Hiba");
+            hibaUzenet.setContentText("Adatbázis hiba: "+e.getMessage());
+            hibaUzenet.show();
+        }
+        uzenet = new Alert(Alert.AlertType.INFORMATION);
+        uzenet.setTitle("Információ");
+        uzenet.setContentText("Az új kérdás/válaszok felvitele sikeresen megtörtént!");
+        uzenet.show();
+
 
     }
 
@@ -126,5 +172,16 @@ public class NewWindowController implements Initializable {
 
     }
 
+    public void ListaFeltoltes() {
 
+        uzenet = new Alert(Alert.AlertType.ERROR);
+        try {
+            aBKerdesek = kezelo.AdatBetoltes();
+        } catch (SQLException e) {
+            uzenet.setTitle("Hiba");
+            uzenet.setContentText("Adatbázis hiba: " + e.getMessage());
+            uzenet.show();
+        }
+
+    }
 }

@@ -48,9 +48,37 @@ public class ABKezelo {
             }
 
         } catch (Exception e) {
-            throw new SQLException("Sikertelen csaatlakozás! "+e.getMessage());
+            throw new SQLException("Sikertelen csatlakozás! "+e.getMessage());
         }
 
         return kerdesek;
+    }
+
+    public void AdatFelvitel(Kerdes kerdes) throws SQLException {
+
+        try {
+            stm = conn.prepareStatement("Insert into kerdes (kerdes, valasz_a, valasz_b, valasz_c, valasz_d, helyes_valasz) values (?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, kerdes.getKerdes());
+            stm.setString(2, kerdes.getValasz_A());
+            stm.setString(3, kerdes.getValasz_B());
+            stm.setString(4, kerdes.getValasz_C());
+            stm.setString(5, kerdes.getValasz_D());
+            stm.setString(6, kerdes.getHelyesValasz());
+
+            stm.executeUpdate();
+
+            ResultSet rs = stm.getGeneratedKeys();
+            if(rs.next()){
+                kerdes.setId(rs.getInt(1));
+            }
+
+            rs.close();
+            stm.clearParameters();
+
+
+        } catch (Exception e) {
+            throw new SQLException("Az adatok felvitele sikertelen volt! "+e.getMessage());
+        }
+
     }
 }

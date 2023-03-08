@@ -13,6 +13,16 @@ public class Kerdes {
 
 
     public Kerdes(Integer id, String kerdes, String valasz_A, String valasz_B, String valasz_C, String valasz_D, String helyesValasz) {
+        this.id = id;
+        this.kerdes = kerdes;
+        this.valasz_A = valasz_A;
+        this.valasz_B = valasz_B;
+        this.valasz_C = valasz_C;
+        this.valasz_D = valasz_D;
+        this.helyesValasz = helyesValasz;
+    }
+
+    public Kerdes(String kerdes, String valasz_A, String valasz_B, String valasz_C, String valasz_D, String helyesValasz) {
         setId(id);
         this.kerdes = kerdes;
         this.valasz_A = valasz_A;
@@ -45,6 +55,56 @@ public class Kerdes {
 
     public String getValasz_B() {
         return valasz_B;
+    }
+
+    public void setKerdes(String kerdes) {
+        this.kerdes = kerdes;
+    }
+
+    public void setValasz_A(String valasz_A) {
+        if(valasz_A != null && !valasz_A.isEmpty()){
+            this.valasz_A = valasz_A;
+        }
+        else{
+            throw new IllegalArgumentException("A válasz mezők nem maradhatnak üresen!");
+        }
+
+    }
+
+    public void setValasz_B(String valasz_B) {
+        if(valasz_B != null && !valasz_B.isEmpty()){
+            this.valasz_B = valasz_B;
+        }
+        else{
+            throw new IllegalArgumentException("A válasz mezők nem maradhatnak üresen!");
+        }
+    }
+
+    public void setValasz_C(String valasz_C) {
+        if(valasz_C != null && !valasz_C.isEmpty()){
+            this.valasz_C = valasz_C;
+        }
+        else{
+            throw new IllegalArgumentException("A válasz mezők nem maradhatnak üresen!");
+        }
+    }
+
+    public void setValasz_D(String valasz_D) {
+        if(valasz_D != null && !valasz_D.isEmpty()){
+            this.valasz_D = valasz_D;
+        }
+        else{
+            throw new IllegalArgumentException("A válasz mezők nem maradhatnak üresen!");
+        }
+    }
+
+    public void setHelyesValasz(String helyesValasz) {
+        if(helyesValasz != null && !helyesValasz.isEmpty()){
+            this.helyesValasz = helyesValasz;
+        }
+        else{
+            throw new IllegalArgumentException("A helyes válasz mező nem maradhat üresen!");
+        }
     }
 
     public String getValasz_C() {
