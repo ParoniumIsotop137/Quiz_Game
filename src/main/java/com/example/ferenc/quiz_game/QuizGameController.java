@@ -158,6 +158,7 @@ public class QuizGameController implements Initializable {
 
     public void ListaFeltoltes() {
 
+        uzenet = new Alert(Alert.AlertType.ERROR);
         try {
             kerdesek = kezelo.AdatBetoltes();
         } catch (SQLException e) {
@@ -246,7 +247,15 @@ public class QuizGameController implements Initializable {
     @FXML
     void AdatKezeles(ActionEvent event) {
 
-        helper.NewWindowOpening(kerdesek);
+        uzenet = new Alert(Alert.AlertType.ERROR);
 
+        helper.NewWindowOpening(kerdesek);
+        try {
+            kezelo.KapcsolatBontasa();
+        } catch (SQLException e) {
+            uzenet.setTitle("Hiba");
+            uzenet.setContentText("Adatbázis hiba: " + e.getMessage());
+            uzenet.show();
+        }
     }
 }

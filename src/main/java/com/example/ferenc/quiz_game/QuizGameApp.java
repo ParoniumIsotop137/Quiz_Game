@@ -20,7 +20,7 @@ public class QuizGameApp extends Application {
             Scene scene = new Scene(fxmlLoader.load());
             String css = this.getClass().getResource("QuizGameAppStyle.css").toExternalForm();
             scene.getStylesheets().add(css);
-            stage.setTitle("Legyen Ön is valami!");
+            stage.setTitle("Legyen Ön is Párttitkár!");
             stage.setScene(scene);
 
             stage.show();

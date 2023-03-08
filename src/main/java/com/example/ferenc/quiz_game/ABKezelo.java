@@ -23,6 +23,14 @@ public class ABKezelo {
 
     }
 
+    public void KapcsolatBontasa() throws SQLException {
+        try {
+            conn.close();
+        } catch (Exception e) {
+            throw new SQLException("Sikertelen lecsatlakozás! "+e.getMessage());
+        }
+    }
+
     public List<Kerdes> AdatBetoltes() throws SQLException {
 
         List<Kerdes> kerdesek = new ArrayList<Kerdes>();
