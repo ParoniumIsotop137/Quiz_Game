@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class QuizGameHelper {
 
     private Alert uzenet;
@@ -87,6 +89,7 @@ public class QuizGameHelper {
             Stage thisStage = new Stage();
 
             Scene scene = new Scene(root);
+
             thisStage.setScene(scene);
             thisStage.setTitle("Adatkezelés");
             thisStage.initModality(Modality.APPLICATION_MODAL);

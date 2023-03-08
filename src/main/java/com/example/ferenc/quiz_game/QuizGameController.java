@@ -108,7 +108,7 @@ public class QuizGameController implements Initializable {
 
         kerdesekSzama++;
 
-        if(kerdesekSzama < kerdesek.size()-1){
+        if(kerdesekSzama < kerdesek.size()){
             KerdesBetoltes();
         }
         else {
@@ -123,7 +123,7 @@ public class QuizGameController implements Initializable {
     void EredmenyKiiras(ActionEvent event) {
 
         joValaszokSzama += helper.Kiertekeles(chBoxA, chBoxB, chBoxC, chBoxD, lblAValasz, lblBValasz, lblCValasz, lblDValasz, kerdesek.get(kerdesekSzama));
-        if(kerdesekSzama <= kerdesek.size()){
+        if(kerdesekSzama < kerdesek.size()){
             btnKovetkezo.setDisable(false);
         }
 
