@@ -201,10 +201,10 @@ public class QuizGameController implements Initializable {
 
     public void ValaszLabelAlapHelyzet(){
 
-        lblAValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
-        lblBValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
-        lblCValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
-        lblDValasz.setBackground(new Background(new BackgroundFill(null, null, null)));
+        lblAValasz.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        lblBValasz.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        lblCValasz.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        lblDValasz.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
 
     }
     @FXML

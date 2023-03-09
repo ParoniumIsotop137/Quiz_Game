@@ -108,9 +108,10 @@ public class ABKezelo {
     public void AdatTorles(Kerdes kerdes) throws SQLException {
 
         try {
-            stm = conn.prepareStatement("Delete from kerdes where id=?");
+            stm = conn.prepareStatement("Delete from kerdes where ID=?");
             stm.setInt(1, kerdes.getId());
 
+            stm.executeUpdate();
             stm.clearParameters();
 
         } catch (SQLException e) {

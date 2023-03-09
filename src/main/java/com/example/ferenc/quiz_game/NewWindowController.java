@@ -104,6 +104,7 @@ public class NewWindowController implements Initializable {
 
         uzenet = new Alert(Alert.AlertType.ERROR);
         btnMentes.setDisable(true);
+        btnMentes.setVisible(false);
         try {
 
             kezelo = new ABKezelo(connectionURL, felhasznalo, jelszo);
@@ -136,6 +137,12 @@ public class NewWindowController implements Initializable {
                     aBKerdesek.add(kerdes);
                     items.add(kerdes.toString());
                     lstVKerdesLista.setItems(items);
+                    uzenet = new Alert(Alert.AlertType.INFORMATION);
+                    uzenet.setTitle("Információ");
+                    uzenet.setContentText("Az új kérdés/válaszok felvitele sikeresen megtörtént!");
+                    uzenet.show();
+                    MezokAlaphelyzetbeAllitasa();
+
 
                 }
                 else{
@@ -156,10 +163,7 @@ public class NewWindowController implements Initializable {
             hibaUzenet.setContentText("Adatbázis hiba: "+e.getMessage());
             hibaUzenet.show();
         }
-        uzenet = new Alert(Alert.AlertType.INFORMATION);
-        uzenet.setTitle("Információ");
-        uzenet.setContentText("Az új kérdés/válaszok felvitele sikeresen megtörtént!");
-        uzenet.show();
+
 
 
     }
@@ -171,13 +175,53 @@ public class NewWindowController implements Initializable {
 
         Ellenorzes();
         btnMentes.setDisable(false);
+        btnMentes.setVisible(true);
 
     }
 
     @FXML
     void Torles(ActionEvent event) {
 
-        Ellenorzes();
+       if(lstVKerdesLista.getSelectionModel().getSelectedIndex() != -1){
+            selectedIndex = lstVKerdesLista.getSelectionModel().getSelectedIndex();
+
+            uzenet = new Alert(Alert.AlertType.CONFIRMATION);
+            uzenet.setTitle("Törlés");
+            uzenet.setContentText("Biztosan törli a kijelölt kérdést?");
+            ButtonType igenButton = new ButtonType("Igen", ButtonBar.ButtonData.YES);
+            ButtonType nemButton = new ButtonType("Mégsem", ButtonBar.ButtonData.NO);
+            uzenet.getButtonTypes().setAll(igenButton, nemButton);
+            uzenet.showAndWait().ifPresent(buttonType -> {
+                if (buttonType == igenButton) {
+                    try {
+
+                        kezelo.AdatTorles(aBKerdesek.get(selectedIndex));
+                        items.remove(selectedIndex);
+                        lstVKerdesLista.setItems(items);
+                        aBKerdesek.remove(selectedIndex);
+
+                        uzenet = new Alert(Alert.AlertType.INFORMATION);
+                        uzenet.setTitle("Információ");
+                        uzenet.setContentText("A kijelölt sor törlése sikeresen megtörtént!");
+                        uzenet.show();
+
+                    } catch (SQLException e) {
+                        uzenet = new Alert(Alert.AlertType.ERROR);
+                        uzenet.setTitle("Hiba");
+                        uzenet.setContentText("Adatbázis hiba: " + e.getMessage());
+                        uzenet.show();
+                    }
+                }
+            });
+
+        }
+        else if(lstVKerdesLista.getSelectionModel().getSelectedIndex() == -1){
+           uzenet = new Alert(Alert.AlertType.WARNING);
+           uzenet.setTitle("Figyelmeztetés");
+           uzenet.setContentText("Nincsen törlésre kijelölt sor!");
+           uzenet.show();
+        }
+
 
 
     }
@@ -198,7 +242,6 @@ public class NewWindowController implements Initializable {
     public void Ellenorzes(){
 
         uzenet = new Alert(Alert.AlertType.WARNING);
-        int cmbIndex;
 
         if(lstVKerdesLista.getSelectionModel().getSelectedIndex() != -1){
             selectedIndex = lstVKerdesLista.getSelectionModel().getSelectedIndex();
@@ -236,6 +279,7 @@ public class NewWindowController implements Initializable {
 
         uzenet = new Alert(Alert.AlertType.WARNING);
         btnMentes.setDisable(true);
+        btnMentes.setVisible(false);
         int cmbIndex = cmbHelyesValasz.getSelectionModel().getSelectedIndex();
         Alert hibaUzenet = new Alert(Alert.AlertType.ERROR);
         try {
@@ -253,7 +297,11 @@ public class NewWindowController implements Initializable {
                 aBKerdesek.set(selectedIndex, kerdes);
                 items.set(selectedIndex, kerdes.toString());
                 lstVKerdesLista.setItems(items);
-
+                uzenet = new Alert(Alert.AlertType.INFORMATION);
+                uzenet.setTitle("Információ");
+                uzenet.setContentText("Az új kérdés/válaszok módosítása sikeresen megtörtént!");
+                uzenet.show();
+                MezokAlaphelyzetbeAllitasa();
 
             }
             else{
@@ -273,11 +321,7 @@ public class NewWindowController implements Initializable {
             hibaUzenet.setContentText("Adatbázis hiba: "+e.getMessage());
             hibaUzenet.show();
         }
-        uzenet = new Alert(Alert.AlertType.INFORMATION);
-        uzenet.setTitle("Információ");
-        uzenet.setContentText("Az új kérdés/válaszok módosítása sikeresen megtörtént!");
-        uzenet.show();
-        MezokAlaphelyzetbeAllitasa();
+
 
     }
     public void MezokAlaphelyzetbeAllitasa(){
